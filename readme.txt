@@ -15,6 +15,8 @@ REQUISITOS PREVIOS
 3. Archivos requeridos:
    - Script de prueba en K6 ( `performance-test.js`)
    - Archivo con datos de usuarios (`users.csv`)
+   -package.json (configurado con "type": "module" y dependencia "quickchart-js") 
+
 
 ------------------------------------------
 PASOS PARA LA EJECUCIÓN
@@ -29,9 +31,27 @@ PASOS PARA LA EJECUCIÓN
 
 - Abrir una terminal en VS Code (Ctrl + ñ)
 - Ejecutar el comando:
-  k6 run performance-test.js
-  
-3.Analizar y verificar los resultados
+ k6 run \
+  --out json=full.json \
+  --summary-export=out.json \
+  performance-test.js
+--------------------------------------------------------
+full.json contendrá todas las muestras temporales.
+out.json incluirá los histogramas y percentiles agregados.
+ -------------------------------------------------------- 
+3.Genera los trends muestreados (latencia y TPS)
+Ejecutar el comando:
+node plotTrend.mjs
+
+4.Genera el pie chart de éxito vs. fallos
+Ejecutar el comando:
+ node pieChart.mjs
+
+5. Genera el bar chart de percentiles
+Ejecutar el comando:
+ node extraChart.mjs
+
+6. Para revisar el resumen de los datos obtenidos abrir el archivo HTML desde la carpeta que lo contiene
 
 ------------------------------------------
 RESULTADOS QUE SE VAN A OBTENER
@@ -41,5 +61,4 @@ Al finalizar la ejecución, se mostrará un resumen con:
 - Tiempo de respuesta (http_req_duration)
 - Porcentaje de error (http_req_failed)
 - Número de peticiones por segundo (throughput)
-
 
