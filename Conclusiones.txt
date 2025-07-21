@@ -1,0 +1,33 @@
+Objetivo de la prueba:
+Evaluar el desempeño del endpoint de login https://fakestoreapi.com/auth/login bajo carga concurrente con múltiples usuarios simulados y datos reales. Se buscó alcanzar al menos 20 transacciones por segundo (TPS), un tiempo de respuesta menor a 1.5 segundos (p95) y una tasa de error inferior al 3%.
+
+El escenario de prueba fue el siguiente:
+-Se simuló 20 usuarios de manera simultanea
+-La prueba duró 10 s
+-Se utilizó un archivo csv con 6 credenciales de usuarios
+
+Se obtuvo los siguientes resultados:
+
+1. Tiempo de respuesta (http_req_duration):
+- Percentil 95 (p95): 373.41 ms
+- Conclusión: Cumple con el requisito de que el 95% de las solicitudes deben estar por debajo de 1.5 segundos.
+
+ 2. Transacciones por segundo (TPS):
+- Solicitudes HTTP: 521 en 10 segundos → ≈ 52 TPS 
+- Conclusión: Supera el mínimo requerido de 20 TPS.
+
+ 3. Tasa de error (http_req_failed):
+- El porcentaje obtuvido es del 20.92% (109 fallos de 521 solicitudes) 
+- Conclusión: No se cumple con la tolerancia del <3%. La mayoría de las fallas se deben a que el endpoint responde con códigos diferentes a 200 en este caso se obtiene el código 401, este fallo probablemente puede deberse a que las credenciales son inválidas o talvez existe problemas en la lógica de autenticación.
+
+4. Checks de validación:
+- Solo el 79% de las respuestas tuvieron código 200.
+- Solo el 79.07% de los checks totales fueron exitosos.
+
+Conclusiones :
+-El tiempo de respuesta es bueno y el sistema es capaz de manejar carga concurrente alta.
+-La tasa de éxito esta por debajo de lo requerido, que puede ser por lo siguiente: credenciales inválidas o vencidas, problemas en la lógica de la autenticación sensible a  múltiples intentos simultáneos o limitaciones en el servicio externo.
+-Mediante este tipo de test se obtuvo resultados que evaluan el performance y la validez de respuesta.Si fuera un entorno real sería bueno trabajar  con backend para entender la lógica del login, revisar si hay limitaciones por IP o concurrencia, y validar contra un entorno de pruebas estable.
+
+
+

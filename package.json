@@ -1,0 +1,16 @@
+{
+  "name": "performance-test-k6-main",
+  "version": "1.0.0",
+   "type": "module",  
+  "description": "Ejercicio de performance con K6 Autor: David Coronel ------------------------------------------ REQUISITOS PREVIOS ------------------------------------------",
+  "main": "performance-test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "quickchart-js": "^3.1.3"
+  }
+}
